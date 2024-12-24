@@ -1,0 +1,23 @@
+package ru.pogoda.ui.components.root
+
+import com.arkivanov.decompose.router.stack.ChildStack
+import com.arkivanov.decompose.value.Value
+import ru.pogoda.ui.components.city_selection.CitySelectionComponent
+import ru.pogoda.ui.components.main.MainComponent
+import ru.pogoda.ui.components.onboarding.geo.GeoOnboardingComponent
+import ru.pogoda.ui.components.onboarding.push.PushOnboardingComponent
+import ru.pogoda.ui.components.splash.SplashComponent
+
+interface RootComponent {
+
+    val stack: Value<ChildStack<*, Child>>
+
+    sealed interface Child {
+        data class Splash(val component: SplashComponent) : Child
+        data class GeoOnboarding(val component: GeoOnboardingComponent) : Child
+        data class PushOnboarding(val component: PushOnboardingComponent) : Child
+        data class CitySelection(val component: CitySelectionComponent) : Child
+        data class Main(val component: MainComponent) : Child
+    }
+
+}
