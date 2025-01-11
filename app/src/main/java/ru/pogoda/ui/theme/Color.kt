@@ -1,6 +1,5 @@
 package ru.pogoda.ui.theme
 
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 val primary = Color(0xFF000000)
@@ -116,10 +115,3 @@ val NeutralVariant95 = Color(0xFFEEF0FA)
 val NeutralVariant98 = Color(0xFFF9F9FF)
 val NeutralVariant99 = Color(0xFFFDFCFF)
 val NeutralVariant100 = Color(0xFFFFFFFF)
-
-val darkBgGradient = Brush.linearGradient(
-    listOf(
-        Color(0xFFD2EAFF),
-        Color(0xFFF2F9FF),
-    )
-)

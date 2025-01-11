@@ -40,7 +40,8 @@ class DefaultRootComponent(
                 get(
                     parameters = Splash.params(
                         context = context,
-                        onOnboarding = { navigation.replaceCurrent(Config.GeoOnboarding) }
+                        onOnboarding = { navigation.replaceCurrent(Config.GeoOnboarding) },
+                        onMain = { navigation.replaceCurrent(Config.Main) }
                     )
                 )
             )

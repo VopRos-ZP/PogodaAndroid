@@ -22,10 +22,12 @@ import ru.pogoda.ui.components.root.DefaultRootComponent
 import ru.pogoda.ui.components.root.RootComponent
 import ru.pogoda.ui.components.splash.DefaultSplashComponent
 import ru.pogoda.ui.components.splash.SplashComponent
+import ru.pogoda.ui.components.splash.SplashStoreFactory
 
 private val storesModule = module {
     single<StoreFactory> { LoggingStoreFactory(DefaultStoreFactory()) }
 
+    singleOf(::SplashStoreFactory)
     singleOf(::CitySelectionStoreFactory)
     singleOf(::MainStoreFactory)
 }

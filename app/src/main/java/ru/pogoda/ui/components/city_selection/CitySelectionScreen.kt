@@ -33,13 +33,14 @@ import ru.pogoda.ui.theme.PogodaTheme
 @Composable
 fun CitySelectionScreen(component: CitySelectionComponent) {
     val state by component.state.collectAsState()
-
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(PogodaTheme.gradients.background),
     ) {
-        TopBar()
+        TopBar(
+            onBackClick = { component.onBackClick() }
+        )
         SearchBar(
             modifier = Modifier.padding(horizontal = 16.dp),
             text = state.search,
@@ -51,16 +52,16 @@ fun CitySelectionScreen(component: CitySelectionComponent) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar() {
+fun TopBar(
+    onBackClick: () -> Unit,
+) {
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = Color.Transparent,
         ),
         navigationIcon = {
             IconButton(
-                onClick = {
-
-                },
+                onClick = onBackClick,
                 colors = IconButtonDefaults.iconButtonColors(
                     containerColor = Color.Transparent,
                     contentColor = MaterialTheme.colorScheme.secondary
