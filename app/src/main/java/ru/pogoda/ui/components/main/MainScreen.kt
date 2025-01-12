@@ -1,18 +1,25 @@
 package ru.pogoda.ui.components.main
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,27 +28,50 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.toSize
 import ru.pogoda.R
+import ru.pogoda.ui.theme.NeutralVariant98
 import ru.pogoda.ui.theme.PogodaTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,219 +79,288 @@ import ru.pogoda.ui.theme.PogodaTheme
 fun MainScreen(component: MainComponent) {
     val state by component.state.collectAsState()
 
-    WeatherScreen()
+    val topAppBarState = rememberTopAppBarState()
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topAppBarState)
 
-//    Scaffold(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .background(PogodaTheme.gradients.background),
-//        containerColor = Color.Transparent,
-//        topBar = {
-//            CenterAlignedTopAppBar(
-//                title = {
-//                    Text(
-//                        text = state.fact.info?.country ?: "",
-//                        style = MaterialTheme.typography.titleLarge,
-//                        color = MaterialTheme.colorScheme.primary
-//                    )
-//                },
-//                navigationIcon = {
-//                    IconButton(onClick = { /* Навигация */ }) {
-//                        Icon(
-//                            imageVector = ImageVector.vectorResource(R.drawable.ic_menu),
-//                            contentDescription = "Menu"
-//                        )
-//                    }
-//                },
-//                actions = {
-//                    IconButton(onClick = { /* Настройки */ }) {
-//                        Icon(
-//                            imageVector = ImageVector.vectorResource(R.drawable.ic_settings),
-//                            contentDescription = "Settings",
-//                        )
-//                    }
-//                },
-//                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-//                    containerColor = Color.Transparent
-//                )
-//            )
-//        },
-//    ) { padding ->
-//        LazyColumn(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .padding(padding)
-//                .background(PogodaTheme.gradients.background)
-//        ) {
-//            item {
-//                TempBlock()
-//            }
-//        }
-//    }
-}
+    val weatherColor = Color(0xFF8ECCFF)
 
-@Composable
-fun TempBlock() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth(),
-        contentAlignment = Alignment.CenterEnd
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(),
-            contentAlignment = Alignment.BottomStart
-        ) {
-
-        }
+    LaunchedEffect(topAppBarState) {
+        Log.d("Main", "${topAppBarState.contentOffset}")
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun WeatherScreen() {
-    val gradientBackground = Brush.verticalGradient(
-        colors = listOf(Color(0xFF64B5F6), Color(0xFFBBDEFB))
-    )
 
     Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(PogodaTheme.gradients.background)
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
         containerColor = Color.Transparent,
-        modifier = Modifier.background(gradientBackground),
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
+                scrollBehavior = scrollBehavior,
                 title = {
                     Text(
-                        text = "Анапа",
+                        text = state.fact.info?.country ?: "FYFgf",
                         style = MaterialTheme.typography.titleLarge,
-                        color = Color.White
+                        color = MaterialTheme.colorScheme.primary
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /* TODO */ }) {
-                        Icon(Icons.Filled.Menu, contentDescription = "Menu", tint = Color.White)
+                    IconButton(onClick = { /* Навигация */ }) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_menu),
+                            contentDescription = "Menu",
+                            tint = MaterialTheme.colorScheme.onSecondaryContainer
+                        )
                     }
                 },
                 actions = {
-                    IconButton(onClick = { /* TODO */ }) {
-                        Icon(Icons.Filled.Settings, contentDescription = "Settings", tint = Color.White)
+                    IconButton(onClick = { /* Настройки */ }) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_settings),
+                            contentDescription = "Settings",
+                            tint = MaterialTheme.colorScheme.onSecondaryContainer
+                        )
                     }
                 },
-                colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = Color.Transparent
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = weatherColor,
+                    scrolledContainerColor = MaterialTheme.colorScheme.onSecondary
                 )
             )
-        }
-    ) { paddingValues ->
-        Column(
+        },
+    ) { padding ->
+        LazyColumn(
             modifier = Modifier
-                .padding(paddingValues)
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp)
+                .fillMaxSize()
+                .padding(padding)
+                .background(PogodaTheme.gradients.background),
+            verticalArrangement = Arrangement.spacedBy(30.dp)
         ) {
-            // Текущая погода
-            CurrentWeatherSection()
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Погода по часам
-            Text(
-                text = "Погода по часам",
-                style = MaterialTheme.typography.titleMedium,
-                color = Color.White
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            HourlyForecastRow()
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Прогноз на 10 дней
-            Text(
-                text = "Погода на 10 дней",
-                style = MaterialTheme.typography.titleMedium,
-                color = Color.White
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            DailyForecastList()
+            item {
+                TempBlock(
+                    onHeightChange = { topAppBarState.contentOffset = it },
+                    color = weatherColor
+                )
+            }
+            item {
+                HourlyForecastRow()
+            }
+            item {
+                DailyForecastList()
+            }
         }
     }
 }
 
 @Composable
-fun CurrentWeatherSection() {
+fun TempBlock(
+    onHeightChange: (Float) -> Unit,
+    color: Color,
+) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color(0xFF64B5F6), RoundedCornerShape(16.dp))
-            .padding(16.dp)
+            .background(
+                color = color,
+                shape = RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp)
+            )
+            .padding(start = 16.dp, end = 16.dp, bottom = 30.dp)
+            .onSizeChanged {
+                onHeightChange(it.toSize().height)
+            }
     ) {
-        Text(
-            text = "+3°",
-            style = MaterialTheme.typography.displayLarge,
-            color = Color.White
-        )
-        Text(
-            text = "Ясно",
-            style = MaterialTheme.typography.bodyLarge,
-            color = Color.White
-        )
-        Text(
-            text = "Ощущается как +1°",
-            style = MaterialTheme.typography.bodyMedium,
-            color = Color.White
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { /* Добавить в избранное */ }) {
-            Text(text = "Добавить город в избранное")
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.Bottom
+        ) {
+            Text(
+                text = "+3°",
+                style = MaterialTheme.typography.bodySmall.copy(
+                    fontSize = 80.sp,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            )
+            Image(
+                painterResource(R.drawable.onboarding),
+                contentDescription = null,
+                modifier = Modifier.size(227.dp)
+            )
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column {
+                Text(
+                    text = "Ясно",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.secondary
+                )
+                Text(
+                    text = "Ощущается как +1°",
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer
+                )
+            }
+            IconButton(
+                onClick = {}
+            ) {
+                Icon(
+                    ImageVector.vectorResource(R.drawable.star_border),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSecondaryContainer
+                )
+            }
         }
     }
 }
 
 @Composable
 fun HourlyForecastRow() {
-    Row(
+    Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .horizontalScroll(rememberScrollState()),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        repeat(6) {
-            Column(
-                modifier = Modifier
-                    .background(Color.White.copy(alpha = 0.3f), RoundedCornerShape(8.dp))
-                    .padding(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(text = "${13 + it}:00", color = Color.White)
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(text = "-8°", color = Color.White)
+        Text(
+            text = "Погода по часам",
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.padding(start = 16.dp)
+        )
+        ScrollableTabRow(
+            selectedTabIndex = 0,
+            containerColor = Color.Transparent,
+            edgePadding = 16.dp,
+            indicator = {
+                TabRowDefaults.SecondaryIndicator(
+                    modifier = Modifier.tabIndicatorOffset(it[0]),
+                    color = MaterialTheme.colorScheme.onSecondary,
+                    height = 3.dp
+                )
+            },
+            divider = { HorizontalDivider(color = MaterialTheme.colorScheme.onSecondary) }
+        ) {
+            repeat(10) {
+                val selected = it == 0
+                Tab(
+                    selected = selected,
+                    onClick = {},
+                    text = {
+                        Text(
+                            text = "Сегодня",
+                            color = if (selected) MaterialTheme.colorScheme.onSecondaryContainer
+                            else MaterialTheme.colorScheme.secondary
+                        )
+                    }
+                )
+            }
+        }
+        LazyRow(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp)
+        ) {
+            items(10) {
+                HourlyItem()
             }
         }
     }
 }
 
 @Composable
+fun HourlyItem() {
+    Card(
+        modifier = Modifier,
+        shape = RoundedCornerShape(10.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = NeutralVariant98.copy(alpha = 0.3f)
+        )
+    ) {
+        Image(
+            painterResource(R.drawable.onboarding),
+            contentDescription = null,
+            modifier = Modifier.size(49.dp)
+        )
+        Text(
+            text = "Сейчас",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.secondary
+        )
+        Text(
+            text = "-8°",
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.primary
+        )
+    }
+}
+
+@Composable
 fun DailyForecastList() {
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        repeat(5) { index ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color.White.copy(alpha = 0.3f), RoundedCornerShape(8.dp))
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = when (index) {
-                        0 -> "Сегодня"
-                        1 -> "Среда, 20 дек."
-                        2 -> "Четверг, 21 дек."
-                        else -> "День ${index + 1}"
-                    },
-                    color = Color.White
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(18.dp)
+    ) {
+        Text(
+            text = "Погода на 10 дней",
+            color = MaterialTheme.colorScheme.primary,
+            style = MaterialTheme.typography.titleMedium,
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    color = MaterialTheme.colorScheme.onSecondary,
+                    shape = RoundedCornerShape(20.dp)
                 )
-                Text(text = "-8° / -10°", color = Color.White)
+                .padding(16.dp)
+                .shadow(
+                    elevation = 0.dp,
+                    shape = RoundedCornerShape(20.dp),
+                ),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            repeat(15) { index ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(30.dp)
+                ) {
+                    Text(
+                        text = "Пн",
+                        color = MaterialTheme.colorScheme.onSecondaryContainer,
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.weight(0.5f)
+                    )
+                    Text(
+                        text = "20 декабря",
+                        color = MaterialTheme.colorScheme.secondary,
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.weight(1f)
+                    )
+                    Image(
+                        painterResource(R.drawable.onboarding),
+                        contentDescription = null,
+                        modifier = Modifier.size(22.dp)
+                    )
+                    Text(
+                        text = "-8°",
+                        color = MaterialTheme.colorScheme.primary,
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                    Text(
+                        text = "-10°",
+                        color = MaterialTheme.colorScheme.primary,
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                }
             }
         }
     }
 }
+
+val TOP_BAR_HEIGHT = 56.dp
+val LazyListState.isScrolling: Boolean
+    get() = firstVisibleItemIndex > 0 || firstVisibleItemScrollOffset > 0
