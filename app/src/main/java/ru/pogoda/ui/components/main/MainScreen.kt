@@ -3,31 +3,21 @@ package ru.pogoda.ui.components.main
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -36,7 +26,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScrollableTabRow
@@ -44,33 +33,28 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 import ru.pogoda.R
+import ru.pogoda.ui.theme.MainColor
+import ru.pogoda.ui.theme.NeutralVariant
+import ru.pogoda.ui.theme.NeutralVariant90
 import ru.pogoda.ui.theme.NeutralVariant98
 import ru.pogoda.ui.theme.PogodaTheme
 
@@ -82,7 +66,7 @@ fun MainScreen(component: MainComponent) {
     val topAppBarState = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topAppBarState)
 
-    val weatherColor = Color(0xFF8ECCFF)
+    val weatherColor = PogodaTheme.colors.cloudyDay
 
     LaunchedEffect(topAppBarState) {
         Log.d("Main", "${topAppBarState.contentOffset}")
@@ -101,7 +85,7 @@ fun MainScreen(component: MainComponent) {
                     Text(
                         text = state.fact.info?.country ?: "FYFgf",
                         style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MainColor
                     )
                 },
                 navigationIcon = {
@@ -129,25 +113,20 @@ fun MainScreen(component: MainComponent) {
             )
         },
     ) { padding ->
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .background(PogodaTheme.gradients.background),
+                .background(PogodaTheme.gradients.background)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(30.dp)
         ) {
-            item {
-                TempBlock(
-                    onHeightChange = { topAppBarState.contentOffset = it },
-                    color = weatherColor
-                )
-            }
-            item {
-                HourlyForecastRow()
-            }
-            item {
-                DailyForecastList()
-            }
+            TempBlock(
+                onHeightChange = { topAppBarState.contentOffset = it },
+                color = weatherColor
+            )
+            HourlyForecastRow()
+            DailyForecastList()
         }
     }
 }
@@ -166,6 +145,7 @@ fun TempBlock(
             )
             .padding(start = 16.dp, end = 16.dp, bottom = 30.dp)
             .onSizeChanged {
+                Log.d("Main", "H -> ${it.toSize().height}")
                 onHeightChange(it.toSize().height)
             }
     ) {
@@ -178,7 +158,7 @@ fun TempBlock(
                 text = "+3°",
                 style = MaterialTheme.typography.bodySmall.copy(
                     fontSize = 80.sp,
-                    color = MaterialTheme.colorScheme.primary
+                    color = MainColor
                 )
             )
             Image(
@@ -271,12 +251,15 @@ fun HourlyForecastRow() {
 
 @Composable
 fun HourlyItem() {
-    Card(
-        modifier = Modifier,
-        shape = RoundedCornerShape(10.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = NeutralVariant98.copy(alpha = 0.3f)
-        )
+    Column(
+        modifier = Modifier
+            .background(
+                color = MaterialTheme.colorScheme.onSecondary.copy(alpha = 0.3f),
+                shape = RoundedCornerShape(10.dp)
+            )
+            .padding(vertical = 16.dp, horizontal = 9.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         Image(
             painterResource(R.drawable.onboarding),
@@ -360,7 +343,3 @@ fun DailyForecastList() {
         }
     }
 }
-
-val TOP_BAR_HEIGHT = 56.dp
-val LazyListState.isScrolling: Boolean
-    get() = firstVisibleItemIndex > 0 || firstVisibleItemScrollOffset > 0

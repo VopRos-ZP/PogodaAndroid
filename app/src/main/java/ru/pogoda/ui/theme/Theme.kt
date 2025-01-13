@@ -23,11 +23,17 @@ data class GradientScheme(
 
 val LocalGradientScheme = staticCompositionLocalOf<GradientScheme> { error("") }
 
+val LocalPogodaColors = staticCompositionLocalOf<PogodaColors> { error("") }
+
 object PogodaTheme {
 
     val gradients: GradientScheme
         @Composable @ReadOnlyComposable
         get() = LocalGradientScheme.current
+
+    val colors: PogodaColors
+        @Composable @ReadOnlyComposable
+        get() = LocalPogodaColors.current
 
 }
 
@@ -47,6 +53,15 @@ private val LightGradientScheme = GradientScheme(
             Color(0xFFF2F9FF),
         )
     )
+)
+
+private val PogodaColorScheme = PogodaColors(
+    clearDay = Color(0xFF8ECCFF),
+    cloudyDay = Color(0xFFE6F0F8),
+    greyDay = Color(0xFFE8EDF0),
+    clearNight = Color(0xFF04569C),
+    cloudyNight = Color(0xFF082742),
+    blackNight = Color(0xFF303030),
 )
 
 private val DarkColorScheme = darkColorScheme(
@@ -78,14 +93,6 @@ private val DarkColorScheme = darkColorScheme(
     outline = NeutralVariant60,
     outlineVariant = NeutralVariant40,
     scrim = primary,
-    surfaceTint = primary, /*********/
-    surfaceBright = primary,
-    surfaceDim = primary,
-    surfaceContainer = primary,
-    surfaceContainerHigh = primary,
-    surfaceContainerHighest = primary,
-    surfaceContainerLow = primary,
-    surfaceContainerLowest = primary,
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -117,14 +124,6 @@ private val LightColorScheme = lightColorScheme(
     outline = NeutralVariant50,
     outlineVariant = NeutralVariant80,
     scrim = primary,
-    surfaceTint = primary, /*********/
-    surfaceBright = primary,
-    surfaceDim = primary,
-    surfaceContainer = primary,
-    surfaceContainerHigh = primary,
-    surfaceContainerHighest = primary,
-    surfaceContainerLow = primary,
-    surfaceContainerLowest = primary,
 )
 
 @Composable
@@ -149,7 +148,8 @@ fun PogodaTheme(
     }
 
     CompositionLocalProvider(
-        LocalGradientScheme provides gradientScheme
+        LocalGradientScheme provides gradientScheme,
+        LocalPogodaColors provides PogodaColorScheme,
     ) {
         MaterialTheme(
             colorScheme = colorScheme,

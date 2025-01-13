@@ -2,6 +2,8 @@ package ru.pogoda.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+val MainColor = Color(0xFF04569C)
+
 val primary = Color(0xFF000000)
 val primary5 = Color(0xFF001127)
 val primary10 = Color(0xFF001C3A)
@@ -25,7 +27,7 @@ val secondary = Color(0xFF000000)
 val secondary5 = Color(0xFF061120)
 val secondary10 = Color(0xFF111C2B)
 val secondary15 = Color(0xFF1B2636)
-val secondary20 = Color(0xFF263141)
+val secondary20 = Color(0xFF040D1B)
 val secondary25 = Color(0xFF313C4C)
 val secondary30 = Color(0xFF3D4758)
 val secondary35 = Color(0xFF485364)
@@ -115,3 +117,12 @@ val NeutralVariant95 = Color(0xFFEEF0FA)
 val NeutralVariant98 = Color(0xFFF9F9FF)
 val NeutralVariant99 = Color(0xFFFDFCFF)
 val NeutralVariant100 = Color(0xFFFFFFFF)
+
+data class PogodaColors(
+    val clearDay: Color,
+    val cloudyDay: Color,
+    val greyDay: Color,
+    val clearNight: Color,
+    val cloudyNight: Color,
+    val blackNight: Color,
+)
