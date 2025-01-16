@@ -44,6 +44,7 @@ private val componentsModule = module {
     factoryOf(::DefaultCitySelectionComponent) bind CitySelectionComponent::class
     factoryOf(::DefaultMainComponent) bind MainComponent::class
     factoryOf(::DefaultSettingsComponent) bind SettingsComponent::class
+    factoryOf(Def)
 }
 
 val presentationModule = module {
