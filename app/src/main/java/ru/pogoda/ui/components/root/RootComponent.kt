@@ -6,6 +6,7 @@ import ru.pogoda.ui.components.city_selection.CitySelectionComponent
 import ru.pogoda.ui.components.main.MainComponent
 import ru.pogoda.ui.components.onboarding.geo.GeoOnboardingComponent
 import ru.pogoda.ui.components.onboarding.push.PushOnboardingComponent
+import ru.pogoda.ui.components.settings.SettingsComponent
 import ru.pogoda.ui.components.splash.SplashComponent
 
 interface RootComponent {
@@ -18,6 +19,7 @@ interface RootComponent {
         data class PushOnboarding(val component: PushOnboardingComponent) : Child
         data class CitySelection(val component: CitySelectionComponent) : Child
         data class Main(val component: MainComponent) : Child
+        data class Settings(val component: SettingsComponent) : Child
     }
 
 }

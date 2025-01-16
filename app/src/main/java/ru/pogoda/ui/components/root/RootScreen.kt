@@ -8,6 +8,7 @@ import ru.pogoda.ui.components.city_selection.CitySelectionScreen
 import ru.pogoda.ui.components.main.MainScreen
 import ru.pogoda.ui.components.onboarding.geo.GeoOnboardingScreen
 import ru.pogoda.ui.components.onboarding.push.PushOnboardingScreen
+import ru.pogoda.ui.components.settings.SettingsScreen
 import ru.pogoda.ui.components.splash.SplashScreen
 
 @Composable
@@ -22,6 +23,7 @@ fun RootScreen(component: RootComponent) {
             is RootComponent.Child.PushOnboarding -> PushOnboardingScreen(child.component)
             is RootComponent.Child.CitySelection -> CitySelectionScreen(child.component)
             is RootComponent.Child.Main -> MainScreen(child.component)
+            is RootComponent.Child.Settings -> SettingsScreen(child.component)
         }
     }
 }

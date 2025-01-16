@@ -20,6 +20,9 @@ import ru.pogoda.ui.components.onboarding.push.PushOnboardingComponent
 import ru.pogoda.ui.components.onboarding.push.DefaultPushOnboardingComponent
 import ru.pogoda.ui.components.root.DefaultRootComponent
 import ru.pogoda.ui.components.root.RootComponent
+import ru.pogoda.ui.components.settings.DefaultSettingsComponent
+import ru.pogoda.ui.components.settings.SettingsComponent
+import ru.pogoda.ui.components.settings.SettingsStoreFactory
 import ru.pogoda.ui.components.splash.DefaultSplashComponent
 import ru.pogoda.ui.components.splash.SplashComponent
 import ru.pogoda.ui.components.splash.SplashStoreFactory
@@ -30,6 +33,7 @@ private val storesModule = module {
     singleOf(::SplashStoreFactory)
     singleOf(::CitySelectionStoreFactory)
     singleOf(::MainStoreFactory)
+    singleOf(::SettingsStoreFactory)
 }
 
 private val componentsModule = module {
@@ -39,6 +43,7 @@ private val componentsModule = module {
     factoryOf(::DefaultPushOnboardingComponent) bind PushOnboardingComponent::class
     factoryOf(::DefaultCitySelectionComponent) bind CitySelectionComponent::class
     factoryOf(::DefaultMainComponent) bind MainComponent::class
+    factoryOf(::DefaultSettingsComponent) bind SettingsComponent::class
 }
 
 val presentationModule = module {

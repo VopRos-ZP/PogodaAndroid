@@ -4,6 +4,7 @@ import com.arkivanov.decompose.DelicateDecomposeApi
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.router.stack.replaceCurrent
 import com.arkivanov.decompose.value.Value
@@ -15,6 +16,7 @@ import ru.pogoda.ui.components.main.Main
 import ru.pogoda.ui.components.onboarding.geo.GeoOnboarding
 import ru.pogoda.ui.components.onboarding.push.PushOnboarding
 import ru.pogoda.ui.components.root.RootComponent.Child
+import ru.pogoda.ui.components.settings.Settings
 import ru.pogoda.ui.components.splash.Splash
 import ru.pogoda.ui.decompose.context.AppComponentContext
 
@@ -75,6 +77,20 @@ class DefaultRootComponent(
                 get(
                     parameters = Main.params(
                         context = context,
+                        onSettings = { navigation.push(Config.Settings) }
+                    )
+                )
+            )
+            is Config.Settings -> Child.Settings(
+                get(
+                    parameters = Settings.params(
+                        context = context,
+                        onBack = { navigation.pop() },
+                        onIcon = {  },
+                        onTheme = {  },
+                        onPolitics = {  },
+                        onConditionUse = {  },
+                        onLocation = {  },
                     )
                 )
             )
@@ -97,6 +113,9 @@ class DefaultRootComponent(
 
         @Serializable
         data object Main : Config
+
+        @Serializable
+        data object Settings : Config
 
     }
 

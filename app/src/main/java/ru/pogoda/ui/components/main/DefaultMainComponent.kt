@@ -7,6 +7,7 @@ import ru.pogoda.ui.decompose.context.AppComponentContext
 
 class DefaultMainComponent(
     context: AppComponentContext,
+    private val onSettings: () -> Unit,
     private val storeFactory: MainStoreFactory,
 ) : MainComponent, AppComponentContext by context {
 
@@ -20,7 +21,7 @@ class DefaultMainComponent(
     }
 
     override fun onSettingsClick() {
-        TODO("Not yet implemented")
+        onSettings()
     }
 
     override fun onFiftyPogodaClick() {

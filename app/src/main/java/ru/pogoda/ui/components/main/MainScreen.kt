@@ -89,7 +89,7 @@ fun MainScreen(component: MainComponent) {
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /* Навигация */ }) {
+                    IconButton(onClick = { component.onFavoritesClick() }) {
                         Icon(
                             imageVector = ImageVector.vectorResource(R.drawable.ic_menu),
                             contentDescription = "Menu",
@@ -98,7 +98,7 @@ fun MainScreen(component: MainComponent) {
                     }
                 },
                 actions = {
-                    IconButton(onClick = { /* Настройки */ }) {
+                    IconButton(onClick = { component.onSettingsClick() }) {
                         Icon(
                             imageVector = ImageVector.vectorResource(R.drawable.ic_settings),
                             contentDescription = "Settings",

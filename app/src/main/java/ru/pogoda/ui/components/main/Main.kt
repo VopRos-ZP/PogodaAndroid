@@ -26,10 +26,12 @@ object Main {
     }
 
     fun params(
-        context: AppComponentContext
+        context: AppComponentContext,
+        onSettings: () -> Unit,
     ): ParametersDefinition = {
         parametersOf(
-            context
+            context,
+            onSettings
         )
     }
 
