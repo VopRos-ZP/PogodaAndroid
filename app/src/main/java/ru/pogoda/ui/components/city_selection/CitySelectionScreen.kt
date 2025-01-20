@@ -51,9 +51,17 @@ fun CitySelectionScreen(component: CitySelectionComponent) {
     ) {
         TopBar { component.onBackClick() }
         SearchBar(
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .offset(y = (-35).dp),
             text = state.search,
             onTextChanged = { component.onSearchChange(it) },
+            leadingIcon = {
+                Icon(
+                    ImageVector.vectorResource(R.drawable.ic_menu),
+                    contentDescription = null
+                )
+            }
         )
     }
 }
@@ -97,53 +105,39 @@ fun SearchBar(
     modifier: Modifier = Modifier,
     text: String,
     onTextChanged: (String) -> Unit,
+    leadingIcon: @Composable (() -> Unit)? = null,
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .offset(y = (-40).dp)
-            .semantics { isTraversalGroup = true }
-    ) {
-        androidx.compose.material3.SearchBar(
-            modifier = modifier
-                .fillMaxWidth()
-                .align(Alignment.TopCenter)
-                .semantics { traversalIndex = 0f },
-            inputField = {
-                SearchBarDefaults.InputField(
-                    query = text,
-                    onQueryChange = { onTextChanged(it) },
-                    onSearch = { },
-                    expanded = false,
-                    onExpandedChange = {},
-                    placeholder = {
-                        Text(
-                            text = "Введите город",
-                            style = MaterialTheme.typography.titleMedium.copy(
-                                fontWeight = FontWeight.Normal,
-                                letterSpacing = 0.5.sp
-                            )
+    androidx.compose.material3.SearchBar(
+        modifier = modifier.fillMaxWidth(),
+        inputField = {
+            SearchBarDefaults.InputField(
+                query = text,
+                onQueryChange = { onTextChanged(it) },
+                onSearch = { },
+                expanded = false,
+                onExpandedChange = {},
+                placeholder = {
+                    Text(
+                        text = "Введите город",
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontWeight = FontWeight.Normal,
+                            letterSpacing = 0.5.sp
                         )
-                    },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(R.drawable.ic_menu),
-                            contentDescription = null,
-                        )
-                    },
-                    trailingIcon = {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(R.drawable.ic_search),
-                            contentDescription = null,
-                        )
-                    },
-                )
-            },
-            expanded = false,
-            onExpandedChange = {},
-            colors = SearchBarDefaults.colors(
-                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    )
+                },
+                leadingIcon = leadingIcon,
+                trailingIcon = {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(R.drawable.ic_search),
+                        contentDescription = null,
+                    )
+                },
             )
-        ) {}
-    }
+        },
+        expanded = false,
+        onExpandedChange = {},
+        colors = SearchBarDefaults.colors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+        )
+    ) {}
 }

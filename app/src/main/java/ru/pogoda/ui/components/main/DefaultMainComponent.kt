@@ -8,6 +8,7 @@ import ru.pogoda.ui.decompose.context.AppComponentContext
 class DefaultMainComponent(
     context: AppComponentContext,
     private val onSettings: () -> Unit,
+    private val onFavorites: () -> Unit,
     private val storeFactory: MainStoreFactory,
 ) : MainComponent, AppComponentContext by context {
 
@@ -17,7 +18,7 @@ class DefaultMainComponent(
     override val state = store.stateFlow
 
     override fun onFavoritesClick() {
-        TODO("Not yet implemented")
+        onFavorites()
     }
 
     override fun onSettingsClick() {
@@ -25,7 +26,7 @@ class DefaultMainComponent(
     }
 
     override fun onFiftyPogodaClick() {
-        TODO("Not yet implemented")
+
     }
 
 }

@@ -1,20 +1,26 @@
 package ru.pogoda.ui.components.favorites
 
-import kotlinx.coroutines.flow.StateFlow
+import com.arkivanov.mvikotlin.core.instancekeeper.getStore
+import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import ru.pogoda.ui.decompose.context.AppComponentContext
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class DefaultFavoritesComponent(
     context: AppComponentContext,
+    private val onBack: () -> Unit,
+    private val storeFactory: FavoritesStoreFactory,
 ) : FavoritesComponent, AppComponentContext by context {
 
-    override val state: StateFlow<Favorites.State>
-        get() = TODO("Not yet implemented")
+    private val store = instanceKeeper.getStore { storeFactory.create() }
+
+    override val state = store.stateFlow
 
     override fun onBackClick() {
-        TODO("Not yet implemented")
+        onBack()
     }
 
     override fun onSearchChange(value: String) {
-        TODO("Not yet implemented")
+        store.accept(Favorites.Intent.OnSearchChange(value))
     }
 }

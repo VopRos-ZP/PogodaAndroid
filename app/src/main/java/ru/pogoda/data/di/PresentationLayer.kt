@@ -11,6 +11,9 @@ import org.koin.dsl.module
 import ru.pogoda.ui.components.city_selection.CitySelectionComponent
 import ru.pogoda.ui.components.city_selection.CitySelectionStoreFactory
 import ru.pogoda.ui.components.city_selection.DefaultCitySelectionComponent
+import ru.pogoda.ui.components.favorites.DefaultFavoritesComponent
+import ru.pogoda.ui.components.favorites.FavoritesComponent
+import ru.pogoda.ui.components.favorites.FavoritesStoreFactory
 import ru.pogoda.ui.components.main.DefaultMainComponent
 import ru.pogoda.ui.components.main.MainComponent
 import ru.pogoda.ui.components.main.MainStoreFactory
@@ -34,6 +37,7 @@ private val storesModule = module {
     singleOf(::CitySelectionStoreFactory)
     singleOf(::MainStoreFactory)
     singleOf(::SettingsStoreFactory)
+    singleOf(::FavoritesStoreFactory)
 }
 
 private val componentsModule = module {
@@ -44,7 +48,7 @@ private val componentsModule = module {
     factoryOf(::DefaultCitySelectionComponent) bind CitySelectionComponent::class
     factoryOf(::DefaultMainComponent) bind MainComponent::class
     factoryOf(::DefaultSettingsComponent) bind SettingsComponent::class
-    factoryOf(Def)
+    factoryOf(::DefaultFavoritesComponent) bind FavoritesComponent::class
 }
 
 val presentationModule = module {

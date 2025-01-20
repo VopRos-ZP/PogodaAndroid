@@ -3,6 +3,7 @@ package ru.pogoda.ui.components.root
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
 import ru.pogoda.ui.components.city_selection.CitySelectionComponent
+import ru.pogoda.ui.components.favorites.FavoritesComponent
 import ru.pogoda.ui.components.main.MainComponent
 import ru.pogoda.ui.components.onboarding.geo.GeoOnboardingComponent
 import ru.pogoda.ui.components.onboarding.push.PushOnboardingComponent
@@ -20,6 +21,7 @@ interface RootComponent {
         data class CitySelection(val component: CitySelectionComponent) : Child
         data class Main(val component: MainComponent) : Child
         data class Settings(val component: SettingsComponent) : Child
+        data class Favorites(val component: FavoritesComponent) : Child
     }
 
 }

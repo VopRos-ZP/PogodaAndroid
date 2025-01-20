@@ -12,6 +12,7 @@ import kotlinx.serialization.Serializable
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import ru.pogoda.ui.components.city_selection.CitySelection
+import ru.pogoda.ui.components.favorites.Favorites
 import ru.pogoda.ui.components.main.Main
 import ru.pogoda.ui.components.onboarding.geo.GeoOnboarding
 import ru.pogoda.ui.components.onboarding.push.PushOnboarding
@@ -77,7 +78,8 @@ class DefaultRootComponent(
                 get(
                     parameters = Main.params(
                         context = context,
-                        onSettings = { navigation.push(Config.Settings) }
+                        onSettings = { navigation.push(Config.Settings) },
+                        onFavorites = { navigation.push(Config.Favorites) }
                     )
                 )
             )
@@ -91,6 +93,14 @@ class DefaultRootComponent(
                         onPolitics = {  },
                         onConditionUse = {  },
                         onLocation = {  },
+                    )
+                )
+            )
+            is Config.Favorites -> Child.Favorites(
+                get(
+                    parameters = Favorites.params(
+                        context = context,
+                        onBackClick = { navigation.pop() }
                     )
                 )
             )
@@ -116,6 +126,9 @@ class DefaultRootComponent(
 
         @Serializable
         data object Settings : Config
+
+        @Serializable
+        data object Favorites : Config
 
     }
 
