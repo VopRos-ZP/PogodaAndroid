@@ -29,11 +29,13 @@ object Main {
         context: AppComponentContext,
         onSettings: () -> Unit,
         onFavorites: () -> Unit,
+        onDailyClick: () -> Unit,
     ): ParametersDefinition = {
         parametersOf(
             context,
             onSettings,
             onFavorites,
+            onDailyClick,
         )
     }
 

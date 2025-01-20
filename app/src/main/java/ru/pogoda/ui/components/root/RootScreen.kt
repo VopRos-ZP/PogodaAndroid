@@ -5,6 +5,7 @@ import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.stack.animation.slide
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import ru.pogoda.ui.components.city_selection.CitySelectionScreen
+import ru.pogoda.ui.components.daily.DailyScreen
 import ru.pogoda.ui.components.favorites.FavoritesScreen
 import ru.pogoda.ui.components.main.MainScreen
 import ru.pogoda.ui.components.onboarding.geo.GeoOnboardingScreen
@@ -26,6 +27,7 @@ fun RootScreen(component: RootComponent) {
             is RootComponent.Child.Main -> MainScreen(child.component)
             is RootComponent.Child.Settings -> SettingsScreen(child.component)
             is RootComponent.Child.Favorites -> FavoritesScreen(child.component)
+            is RootComponent.Child.Daily -> DailyScreen(child.component)
         }
     }
 }
