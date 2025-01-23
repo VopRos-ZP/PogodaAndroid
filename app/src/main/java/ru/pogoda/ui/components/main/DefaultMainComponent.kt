@@ -9,6 +9,7 @@ class DefaultMainComponent(
     context: AppComponentContext,
     private val onSettings: () -> Unit,
     private val onFavorites: () -> Unit,
+    private val onDaily: () -> Unit,
     private val storeFactory: MainStoreFactory,
 ) : MainComponent, AppComponentContext by context {
 
@@ -25,8 +26,8 @@ class DefaultMainComponent(
         onSettings()
     }
 
-    override fun onFiftyPogodaClick() {
-
+    override fun onDailyClick() {
+        onDaily()
     }
 
 }

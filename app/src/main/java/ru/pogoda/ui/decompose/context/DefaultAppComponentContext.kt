@@ -19,12 +19,20 @@ class DefaultAppComponentContext(
     InstanceKeeperOwner by componentContext,
     BackHandlerOwner by componentContext {
 
-    override val componentContextFactory: ComponentContextFactory<AppComponentContext> =
+    override val componentContextFactory =
         ComponentContextFactory { lifecycle, stateKeeper, instanceKeeper, backHandler ->
-            val ctx = componentContext.componentContextFactory(lifecycle, stateKeeper, instanceKeeper, backHandler)
             DefaultAppComponentContext(
-                componentContext = ctx,
-                scope = scope.apply { lifecycle.doOnDestroy { cancel() } }
+                componentContext = componentContext.componentContextFactory(
+                    lifecycle = lifecycle,
+                    stateKeeper = stateKeeper,
+                    instanceKeeper = instanceKeeper,
+                    backHandler = backHandler
+                ),
+                scope = scope.apply {
+                    lifecycle.doOnDestroy {
+                        cancel()
+                    }
+                }
             )
         }
 }

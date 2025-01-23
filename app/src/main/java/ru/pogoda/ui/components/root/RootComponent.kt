@@ -10,6 +10,7 @@ import ru.pogoda.ui.components.onboarding.geo.GeoOnboardingComponent
 import ru.pogoda.ui.components.onboarding.push.PushOnboardingComponent
 import ru.pogoda.ui.components.settings.SettingsComponent
 import ru.pogoda.ui.components.splash.SplashComponent
+import ru.pogoda.ui.components.theme.ThemeComponent
 
 interface RootComponent {
 
@@ -24,6 +25,7 @@ interface RootComponent {
         data class Settings(val component: SettingsComponent) : Child
         data class Favorites(val component: FavoritesComponent) : Child
         data class Daily(val component: DailyComponent) : Child
+        data class Theme(val component: ThemeComponent) : Child
     }
 
 }

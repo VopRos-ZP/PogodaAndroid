@@ -11,6 +11,8 @@ import org.koin.dsl.module
 import ru.pogoda.ui.components.city_selection.CitySelectionComponent
 import ru.pogoda.ui.components.city_selection.CitySelectionStoreFactory
 import ru.pogoda.ui.components.city_selection.DefaultCitySelectionComponent
+import ru.pogoda.ui.components.daily.DailyComponent
+import ru.pogoda.ui.components.daily.DefaultDailyComponent
 import ru.pogoda.ui.components.favorites.DefaultFavoritesComponent
 import ru.pogoda.ui.components.favorites.FavoritesComponent
 import ru.pogoda.ui.components.favorites.FavoritesStoreFactory
@@ -29,6 +31,9 @@ import ru.pogoda.ui.components.settings.SettingsStoreFactory
 import ru.pogoda.ui.components.splash.DefaultSplashComponent
 import ru.pogoda.ui.components.splash.SplashComponent
 import ru.pogoda.ui.components.splash.SplashStoreFactory
+import ru.pogoda.ui.components.theme.DefaultThemeComponent
+import ru.pogoda.ui.components.theme.ThemeComponent
+import ru.pogoda.ui.components.theme.ThemeStoreFactory
 
 private val storesModule = module {
     single<StoreFactory> { LoggingStoreFactory(DefaultStoreFactory()) }
@@ -38,6 +43,7 @@ private val storesModule = module {
     singleOf(::MainStoreFactory)
     singleOf(::SettingsStoreFactory)
     singleOf(::FavoritesStoreFactory)
+    singleOf(::ThemeStoreFactory)
 }
 
 private val componentsModule = module {
@@ -49,6 +55,8 @@ private val componentsModule = module {
     factoryOf(::DefaultMainComponent) bind MainComponent::class
     factoryOf(::DefaultSettingsComponent) bind SettingsComponent::class
     factoryOf(::DefaultFavoritesComponent) bind FavoritesComponent::class
+    factoryOf(::DefaultDailyComponent) bind DailyComponent::class
+    factoryOf(::DefaultThemeComponent) bind ThemeComponent::class
 }
 
 val presentationModule = module {

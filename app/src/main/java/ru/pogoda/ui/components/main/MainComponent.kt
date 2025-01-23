@@ -7,5 +7,5 @@ interface MainComponent {
 
     fun onFavoritesClick()
     fun onSettingsClick()
-    fun onFiftyPogodaClick()
+    fun onDailyClick()
 }

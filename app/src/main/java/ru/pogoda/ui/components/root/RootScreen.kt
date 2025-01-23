@@ -12,6 +12,7 @@ import ru.pogoda.ui.components.onboarding.geo.GeoOnboardingScreen
 import ru.pogoda.ui.components.onboarding.push.PushOnboardingScreen
 import ru.pogoda.ui.components.settings.SettingsScreen
 import ru.pogoda.ui.components.splash.SplashScreen
+import ru.pogoda.ui.components.theme.ThemeScreen
 
 @Composable
 fun RootScreen(component: RootComponent) {
@@ -28,6 +29,7 @@ fun RootScreen(component: RootComponent) {
             is RootComponent.Child.Settings -> SettingsScreen(child.component)
             is RootComponent.Child.Favorites -> FavoritesScreen(child.component)
             is RootComponent.Child.Daily -> DailyScreen(child.component)
+            is RootComponent.Child.Theme -> ThemeScreen(child.component)
         }
     }
 }

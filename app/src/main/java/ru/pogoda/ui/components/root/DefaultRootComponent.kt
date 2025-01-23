@@ -20,6 +20,7 @@ import ru.pogoda.ui.components.onboarding.push.PushOnboarding
 import ru.pogoda.ui.components.root.RootComponent.Child
 import ru.pogoda.ui.components.settings.Settings
 import ru.pogoda.ui.components.splash.Splash
+import ru.pogoda.ui.components.theme.Theme
 import ru.pogoda.ui.decompose.context.AppComponentContext
 
 @OptIn(DelicateDecomposeApi::class)
@@ -91,7 +92,7 @@ class DefaultRootComponent(
                         context = context,
                         onBack = { navigation.pop() },
                         onIcon = {  },
-                        onTheme = {  },
+                        onTheme = { navigation.push(Config.Theme) },
                         onPolitics = {  },
                         onConditionUse = {  },
                         onLocation = {  },
@@ -109,6 +110,14 @@ class DefaultRootComponent(
             is Config.Daily -> Child.Daily(
                 get(
                     parameters = Daily.params(
+                        context = context,
+                        onBackClick = { navigation.pop() }
+                    )
+                )
+            )
+            is Config.Theme -> Child.Theme(
+                get(
+                    parameters = Theme.params(
                         context = context,
                         onBackClick = { navigation.pop() }
                     )
@@ -142,6 +151,9 @@ class DefaultRootComponent(
 
         @Serializable
         data object Daily : Config
+
+        @Serializable
+        data object Theme : Config
 
     }
 
