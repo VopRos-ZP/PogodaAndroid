@@ -3,7 +3,6 @@ package ru.pogoda.data.di
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.logging.store.LoggingStoreFactory
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
-import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -19,10 +18,10 @@ import ru.pogoda.ui.components.favorites.FavoritesStoreFactory
 import ru.pogoda.ui.components.main.DefaultMainComponent
 import ru.pogoda.ui.components.main.MainComponent
 import ru.pogoda.ui.components.main.MainStoreFactory
-import ru.pogoda.ui.components.onboarding.geo.GeoOnboardingComponent
 import ru.pogoda.ui.components.onboarding.geo.DefaultGeoOnboardingComponent
-import ru.pogoda.ui.components.onboarding.push.PushOnboardingComponent
+import ru.pogoda.ui.components.onboarding.geo.GeoOnboardingComponent
 import ru.pogoda.ui.components.onboarding.push.DefaultPushOnboardingComponent
+import ru.pogoda.ui.components.onboarding.push.PushOnboardingComponent
 import ru.pogoda.ui.components.root.DefaultRootComponent
 import ru.pogoda.ui.components.root.RootComponent
 import ru.pogoda.ui.components.settings.DefaultSettingsComponent
