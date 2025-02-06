@@ -5,16 +5,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +23,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import ru.pogoda.R
 import ru.pogoda.ui.compose.BackTopBar
+import ru.pogoda.ui.compose.Buttons
 import ru.pogoda.ui.theme.Neutral35
 import ru.pogoda.ui.theme.PogodaTheme
 
@@ -67,150 +64,86 @@ fun SettingsScreen(component: SettingsComponent) {
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     Text(
-                        modifier = Modifier.weight(0.55f),
+                        modifier = Modifier.weight(0.5f),
                         text = "Температура",
                         style = MaterialTheme.typography.titleMedium,
                     )
-                    Spacer(modifier = Modifier.width(31.dp))
                     SingleChoiceSegmentedButtonRow(
                         modifier = Modifier.weight(1f)
                     ) {
-                        tempOpts.forEachIndexed { i, t ->
-                            SegmentedButton(
-                                modifier = Modifier.weight(1f),
-                                selected = state.temp == i,
-                                onClick = { component.onTempChange(i) },
-                                shape = SegmentedButtonDefaults.itemShape(
-                                    index = i,
-                                    count = tempOpts.size
-                                ),
-                                colors = SegmentedButtonDefaults.colors(
-                                    activeContainerColor = MaterialTheme.colorScheme.primary,
-                                    activeBorderColor = MaterialTheme.colorScheme.primary,
-                                    inactiveBorderColor = MaterialTheme.colorScheme.primary,
-                                    activeContentColor = MaterialTheme.colorScheme.onPrimary
-                                ),
-                            ) {
-                                Text(
-                                    text = t,
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                            }
-                        }
+                        Buttons(
+                            state = state.temp,
+                            opts = tempOpts,
+                            onClick = { component.onTempChange(it) },
+                            format = { it }
+                        )
                     }
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     Text(
-                        modifier = Modifier.weight(0.55f),
+                        modifier = Modifier.weight(0.5f),
                         text = "Ветер",
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.titleSmall,
                     )
-                    Spacer(modifier = Modifier.width(31.dp))
                     SingleChoiceSegmentedButtonRow(
                         modifier = Modifier.weight(1f)
                     ) {
-                        windOpts.forEachIndexed { i, t ->
-                            SegmentedButton(
-                                modifier = Modifier.weight(1f),
-                                selected = state.wind == i,
-                                onClick = { component.onWindChange(i) },
-                                shape = SegmentedButtonDefaults.itemShape(
-                                    index = i,
-                                    count = windOpts.size
-                                ),
-                                colors = SegmentedButtonDefaults.colors(
-                                    activeContainerColor = MaterialTheme.colorScheme.primary,
-                                    activeBorderColor = MaterialTheme.colorScheme.primary,
-                                    inactiveBorderColor = MaterialTheme.colorScheme.primary,
-                                    activeContentColor = MaterialTheme.colorScheme.onPrimary
-                                ),
-                            ) {
-                                Text(
-                                    text = t,
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                            }
-                        }
+                        Buttons(
+                            state = state.wind,
+                            opts = windOpts,
+                            onClick = { component.onWindChange(it) },
+                            format = { it }
+                        )
                     }
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     Text(
-                        modifier = Modifier.weight(0.55f),
+                        modifier = Modifier.weight(0.5f),
                         text = "Давление",
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.titleSmall,
                     )
-                    Spacer(modifier = Modifier.width(31.dp))
                     SingleChoiceSegmentedButtonRow(
                         modifier = Modifier.weight(1f)
                     ) {
-                        pressureOpts.forEachIndexed { i, t ->
-                            SegmentedButton(
-                                modifier = Modifier.weight(1f),
-                                selected = state.pressure == i,
-                                onClick = { component.onPressureChange(i) },
-                                shape = SegmentedButtonDefaults.itemShape(
-                                    index = i,
-                                    count = pressureOpts.size
-                                ),
-                                colors = SegmentedButtonDefaults.colors(
-                                    activeContainerColor = MaterialTheme.colorScheme.primary,
-                                    activeBorderColor = MaterialTheme.colorScheme.primary,
-                                    inactiveBorderColor = MaterialTheme.colorScheme.primary,
-                                    activeContentColor = MaterialTheme.colorScheme.onPrimary
-                                ),
-                            ) {
-                                Text(
-                                    text = t,
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                            }
-                        }
+                        Buttons(
+                            state = state.pressure,
+                            opts = pressureOpts,
+                            onClick = { component.onPressureChange(it) },
+                            format = { it }
+                        )
                     }
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     Text(
-                        modifier = Modifier.weight(0.55f),
+                        modifier = Modifier.weight(0.5f),
                         text = "Время",
                         style = MaterialTheme.typography.titleMedium,
                     )
-                    Spacer(modifier = Modifier.width(31.dp))
                     SingleChoiceSegmentedButtonRow(
                         modifier = Modifier.weight(1f)
                     ) {
-                        timeOpts.forEachIndexed { i, t ->
-                            SegmentedButton(
-                                modifier = Modifier.weight(1f),
-                                selected = state.time == i,
-                                onClick = { component.onTimeChange(i) },
-                                shape = SegmentedButtonDefaults.itemShape(
-                                    index = i,
-                                    count = timeOpts.size
-                                ),
-                                colors = SegmentedButtonDefaults.colors(
-                                    activeContainerColor = MaterialTheme.colorScheme.primary,
-                                    activeBorderColor = MaterialTheme.colorScheme.primary,
-                                    inactiveBorderColor = MaterialTheme.colorScheme.primary,
-                                    activeContentColor = MaterialTheme.colorScheme.onPrimary
-                                ),
-                            ) {
-                                Text(
-                                    text = t,
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                            }
-                        }
+                        Buttons(
+                            state = state.time,
+                            opts = timeOpts,
+                            onClick = { component.onTimeChange(it) },
+                            format = { it }
+                        )
                     }
                 }
             }
@@ -221,28 +154,12 @@ fun SettingsScreen(component: SettingsComponent) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { component.onIconChangeClick() }
-                        .padding(horizontal = 16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = "Смена иконки приложения",
-                        style = MaterialTheme.typography.titleMedium,
-                    )
-                    Icon(
-                        ImageVector.vectorResource(R.drawable.arrow_forward),
-                        contentDescription = null
-                    )
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
                         .clickable { component.onThemeChangeClick() }
                         .padding(horizontal = 16.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Тема",
+                        text = "Расширенные настройки",
                         style = MaterialTheme.typography.titleMedium,
                     )
                     Icon(

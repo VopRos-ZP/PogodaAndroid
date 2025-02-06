@@ -382,4 +382,3 @@ fun WeatherCard() {
         }
     }
 }
-

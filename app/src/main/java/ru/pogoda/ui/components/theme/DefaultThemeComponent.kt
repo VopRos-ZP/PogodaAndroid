@@ -23,4 +23,9 @@ class DefaultThemeComponent(
     override fun onThemeChange(value: Int) {
         store.accept(Theme.Intent.OnThemeChange(value))
     }
+
+    override fun onLogoChange(value: Int) {
+        store.accept(Theme.Intent.OnLogoChange(value))
+    }
+
 }

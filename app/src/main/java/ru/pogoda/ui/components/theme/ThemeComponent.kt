@@ -7,4 +7,5 @@ interface ThemeComponent {
 
     fun onBackClick()
     fun onThemeChange(value: Int)
+    fun onLogoChange(value: Int)
 }

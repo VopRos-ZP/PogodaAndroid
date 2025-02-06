@@ -33,9 +33,7 @@ class MainActivity : ComponentActivity(), KoinComponent {
         enableEdgeToEdge()
         setContent {
             KoinAndroidContext {
-                PogodaTheme(
-                    dynamicColor = false
-                ) {
+                PogodaTheme(dynamicColor = false) {
                     RootScreen(component = rootComponent)
                 }
             }

@@ -23,10 +23,12 @@ class ThemeStoreFactory(
             },
             executorFactory = coroutineExecutorFactory {
                 onIntent<Intent.OnThemeChange> { dispatch(Msg.OnThemeChange(it.value)) }
+                onIntent<Intent.OnLogoChange> { dispatch(Msg.OnLogoChange(it.value)) }
             },
             reducer = {
                 when (it) {
                     is Msg.OnThemeChange -> copy(theme = it.value)
+                    is Msg.OnLogoChange -> copy(logo = it.value)
                 }
             }
         ) {}
