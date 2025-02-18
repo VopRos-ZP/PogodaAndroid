@@ -17,11 +17,11 @@ class MainStoreFactory(
             name = "MainStore",
             initialState = Main.State(),
             bootstrapper = coroutineBootstrapper {
-//                launch {
-//                    weatherRepository.weather.collect {
-//                        dispatch(Main.Action.OnWeatherChange(it))
-//                    }
-//                }
+                launch {
+                    weatherRepository.weather.collect {
+                        dispatch(Main.Action.OnWeatherChange(it))
+                    }
+                }
             },
             executorFactory = coroutineExecutorFactory {
                 onAction<Main.Action.OnWeatherChange> {

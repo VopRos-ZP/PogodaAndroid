@@ -74,7 +74,7 @@ fun MainScreen(component: MainComponent) {
                 scrollBehavior = scrollBehavior,
                 title = {
                     Text(
-                        text = state.fact.info?.country ?: "FYFgf",
+                        text = state.fact.info?.country ?: "Loading",
                         style = MaterialTheme.typography.titleLarge,
                         color = MainColor
                     )
@@ -113,6 +113,8 @@ fun MainScreen(component: MainComponent) {
             verticalArrangement = Arrangement.spacedBy(30.dp)
         ) {
             TempBlock(
+                temp = state.fact.fact?.temp?.toInt() ?: 0,
+                secondTemp = state.fact.fact?.feels_like?.toInt() ?: 0,
                 onHeightChange = { topAppBarState.contentOffset = it },
                 color = weatherColor
             )
@@ -219,6 +221,8 @@ fun MainScreen(component: MainComponent) {
 
 @Composable
 fun TempBlock(
+    temp: Int,
+    secondTemp: Int,
     onHeightChange: (Float) -> Unit,
     color: Color,
 ) {
@@ -241,7 +245,7 @@ fun TempBlock(
             verticalAlignment = Alignment.Bottom
         ) {
             Text(
-                text = "+3°",
+                text = "$temp°",
                 style = MaterialTheme.typography.bodySmall.copy(
                     fontSize = 80.sp,
                     color = MainColor
@@ -264,13 +268,13 @@ fun TempBlock(
                     color = MaterialTheme.colorScheme.secondary
                 )
                 Text(
-                    text = "Ощущается как +1°",
+                    text = "Ощущается как $secondTemp°",
                     style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.onSecondaryContainer
                 )
             }
             IconButton(
-                onClick = {}
+                onClick = {  }
             ) {
                 Icon(
                     ImageVector.vectorResource(R.drawable.star_border),
@@ -377,8 +381,71 @@ fun WeatherCard() {
             .padding(horizontal = 19.dp, vertical = 17.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp)
     ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            WeatherCardItem(
+                resource = R.drawable.frame_65,
+                name = "Ветер",
+                value = ""
+            )
+            WeatherCardItem(
+                resource = R.drawable.frame_68,
+                name = "Порыв ветра",
+                value = ""
+            )
+        }
         Row {
+            WeatherCardItem(
+                resource = R.drawable.today,
+                name = "УФИ",
+                value = ""
+            )
+            WeatherCardItem(
+                resource = R.drawable.frame_67,
+                name = "Влажность",
+                value = ""
+            )
+        }
+        Row {
+            WeatherCardItem(
+                resource = R.drawable.frame_66,
+                name = "Давление",
+                value = ""
+            )
+            WeatherCardItem(
+                resource = R.drawable.frame_63,
+                name = "Вер. осадков",
+                value = ""
+            )
+        }
+    }
+}
 
+@Composable
+fun WeatherCardItem(
+    resource: Int,
+    name: String,
+    value: String,
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(3.dp)
+    ) {
+        ImageVector.vectorResource(resource).let {
+            Icon(
+                imageVector = it,
+                contentDescription = it.name,
+                modifier = Modifier.size(30.dp)
+            )
+        }
+        Column {
+            Text(
+                text = name
+            )
+            Text(
+                text = value
+            )
         }
     }
 }
