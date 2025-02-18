@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -17,6 +18,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -73,11 +75,13 @@ fun MainScreen(component: MainComponent) {
             CenterAlignedTopAppBar(
                 scrollBehavior = scrollBehavior,
                 title = {
-                    Text(
-                        text = state.fact.info?.country ?: "Loading",
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MainColor
-                    )
+                    state.weather?.info?.country?.let {
+                        Text(
+                            text = it,
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MainColor
+                        )
+                    }
                 },
                 navigationIcon = {
                     IconButton(onClick = { component.onFavoritesClick() }) {
@@ -104,116 +108,128 @@ fun MainScreen(component: MainComponent) {
             )
         },
     ) { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .background(PogodaTheme.gradients.background)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(30.dp)
-        ) {
-            TempBlock(
-                temp = state.fact.fact?.temp?.toInt() ?: 0,
-                secondTemp = state.fact.fact?.feels_like?.toInt() ?: 0,
-                onHeightChange = { topAppBarState.contentOffset = it },
-                color = weatherColor
-            )
-            HourlyForecastRow()
+        if (state.weather == null) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        } else {
+            val weather = state.weather!!
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
+                    .fillMaxSize()
+                    .padding(padding)
+                    .background(PogodaTheme.gradients.background)
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(30.dp)
             ) {
-                Text(
-                    text = "Погода на 10 дней",
-                    color = MaterialTheme.colorScheme.primary,
-                    style = MaterialTheme.typography.titleMedium,
+                TempBlock(
+                    temp = weather.fact.temp,
+                    secondTemp = weather.fact.feelsLike,
+                    onHeightChange = { topAppBarState.contentOffset = it },
+                    color = weatherColor
                 )
+                HourlyForecastRow()
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(
-                            color = MaterialTheme.colorScheme.onSecondary,
-                            shape = RoundedCornerShape(20.dp)
-                        )
-                        .padding(horizontal = 16.dp, vertical = 20.dp),
+                        .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    repeat(15) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(30.dp)
-                        ) {
-                            Text(
-                                text = "Пн",
-                                color = MaterialTheme.colorScheme.onSecondaryContainer,
-                                style = MaterialTheme.typography.bodyMedium,
-                                modifier = Modifier.weight(0.5f)
+                    Text(
+                        text = "Погода на 10 дней",
+                        color = MaterialTheme.colorScheme.primary,
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(
+                                color = MaterialTheme.colorScheme.onSecondary,
+                                shape = RoundedCornerShape(20.dp)
                             )
-                            Text(
-                                text = "20 декабря",
-                                color = MaterialTheme.colorScheme.secondary,
-                                style = MaterialTheme.typography.bodySmall,
-                                modifier = Modifier.weight(1f)
-                            )
-                            Image(
-                                painterResource(R.drawable.onboarding),
-                                contentDescription = null,
-                                modifier = Modifier.size(22.dp)
-                            )
-                            Text(
-                                text = "-8°",
-                                color = MaterialTheme.colorScheme.primary,
-                                style = MaterialTheme.typography.labelLarge
-                            )
-                            Text(
-                                text = "-10°",
-                                color = MaterialTheme.colorScheme.primary,
-                                style = MaterialTheme.typography.labelLarge
-                            )
+                            .padding(horizontal = 16.dp, vertical = 20.dp),
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        repeat(15) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(30.dp)
+                            ) {
+                                Text(
+                                    text = "Пн",
+                                    color = MaterialTheme.colorScheme.onSecondaryContainer,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    modifier = Modifier.weight(0.5f)
+                                )
+                                Text(
+                                    text = "20 декабря",
+                                    color = MaterialTheme.colorScheme.secondary,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    modifier = Modifier.weight(1f)
+                                )
+                                Image(
+                                    painterResource(R.drawable.onboarding),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(22.dp)
+                                )
+                                Text(
+                                    text = "-8°",
+                                    color = MaterialTheme.colorScheme.primary,
+                                    style = MaterialTheme.typography.labelLarge
+                                )
+                                Text(
+                                    text = "-10°",
+                                    color = MaterialTheme.colorScheme.primary,
+                                    style = MaterialTheme.typography.labelLarge
+                                )
+                            }
                         }
                     }
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { component.onDailyClick() }
-                        .padding(vertical = 10.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { component.onDailyClick() }
+                            .padding(vertical = 10.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                ImageVector.vectorResource(R.drawable.today),
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                            Text(
+                                text = "Погода на 15 дней",
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                        }
                         Icon(
-                            ImageVector.vectorResource(R.drawable.today),
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                        Text(
-                            text = "Погода на 15 дней",
-                            style = MaterialTheme.typography.titleMedium
+                            ImageVector.vectorResource(R.drawable.arrow_forward),
+                            contentDescription = null
                         )
                     }
-                    Icon(
-                        ImageVector.vectorResource(R.drawable.arrow_forward),
-                        contentDescription = null
-                    )
                 }
-            }
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            ) {
-                Text(
-                    text = "Текущие погодные условия",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MainColor
-                )
-                WeatherCard()
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                ) {
+                    Text(
+                        text = "Текущие погодные условия",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MainColor
+                    )
+                    WeatherCard()
+                }
             }
         }
     }
@@ -221,8 +237,8 @@ fun MainScreen(component: MainComponent) {
 
 @Composable
 fun TempBlock(
-    temp: Int,
-    secondTemp: Int,
+    temp: Double,
+    secondTemp: Double,
     onHeightChange: (Float) -> Unit,
     color: Color,
 ) {

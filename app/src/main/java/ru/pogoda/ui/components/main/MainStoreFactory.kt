@@ -30,7 +30,7 @@ class MainStoreFactory(
             },
             reducer = {
                 when (it) {
-                    is Main.Msg.OnWeatherChange -> copy(fact = it.fact)
+                    is Main.Msg.OnWeatherChange -> copy(weather = it.fact)
                 }
             }
         ) {}

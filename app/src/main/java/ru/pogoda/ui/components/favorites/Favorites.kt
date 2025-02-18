@@ -9,7 +9,7 @@ object Favorites {
 
     data class State(
         val search: String = "",
-        val currentLocation: WeatherResponse = WeatherResponse()
+        val currentLocation: WeatherResponse? = null
     )
 
     sealed interface Intent {

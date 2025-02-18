@@ -1,12 +1,16 @@
 package ru.pogoda.data.model
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class WeatherResponse(
-    val info: InfoBlock? = null,
-    val fact: FactBlock? = null,
-    val forecast_24: Map<String, ForecastDay>? = null,
-    val forecast_6: Map<String, ForecastDay>? = null,
-    val forecast_3: ForecastHourly? = null
+    val info: InfoBlock,
+    val fact: FactBlock,
+    @SerialName("forecast_24")
+    val forecast24: Map<String, ForecastDay>,
+    @SerialName("forecast_6")
+    val forecast6: Map<String, ForecastDay>,
+    @SerialName("forecast_3")
+    val forecast3: ForecastHourly
 )

@@ -1,23 +1,33 @@
 package ru.pogoda.data.model
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class ForecastHourlyDetails(
     val date: String,
-    val light: String? = null,
-    val condition: String? = null,
-    val condition_s: String? = null,
-    val temp_min: Double? = null,
-    val temp_max: Double? = null,
-    val temp: Double? = null,
-    val humidity: Int? = null,
-    val prec_prob: Int? = null,
-    val wind_gust: Double? = null,
-    val wind_speed: Double? = null,
-    val wind_dir: String? = null,
-    val pressure: Int? = null,
-    val uvi: Int? = null,
-    val feels_like: Double? = null,
-    val comf_idx: Int? = null
+    val light: String,
+    val condition: String,
+    @SerialName("condition_s")
+    val conditionS: String,
+    @SerialName("temp_min")
+    val tempMin: Double,
+    @SerialName("temp_max")
+    val tempMax: Double,
+    val temp: Double,
+    val humidity: Int,
+    @SerialName("prec_prob")
+    val precProb: Int,
+    @SerialName("wind_gust")
+    val windGust: Double,
+    @SerialName("wind_speed")
+    val windSpeed: Double,
+    @SerialName("wind_dir")
+    val windDir: String,
+    val pressure: Int,
+    val uvi: Int,
+    @SerialName("feels_like")
+    val feelsLike: Double,
+    @SerialName("comf_idx")
+    val comfIdx: Int
 )

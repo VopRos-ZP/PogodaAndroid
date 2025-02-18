@@ -8,7 +8,7 @@ import ru.pogoda.ui.decompose.context.AppComponentContext
 object Main {
 
     data class State(
-        val fact: WeatherResponse = WeatherResponse(),
+        val weather: WeatherResponse? = null,
     )
 
     sealed interface Intent {
