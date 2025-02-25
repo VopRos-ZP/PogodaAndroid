@@ -25,7 +25,7 @@ class WeatherRepositoryImpl(
                         parameter("type", 1)
                         parameter("period", 1)
                         parameter("mode", "city")
-                        parameter("block", "fact")
+                        parameter("block", "forecast,fact")
                     }.body()
                 )
             } catch (e: Exception) {

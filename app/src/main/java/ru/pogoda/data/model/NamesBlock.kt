@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class NamesBlock(
     val name: LocalizedName,
     val admin: LocalizedName,
-    val island: LocalizedName
+    val island: LocalizedName? = null,
 )
