@@ -1,8 +1,8 @@
 package ru.pogoda.ui.components.splash
 
+import com.arkivanov.decompose.ComponentContext
 import org.koin.core.parameter.ParametersDefinition
 import org.koin.core.parameter.parametersOf
-import ru.pogoda.ui.decompose.context.AppComponentContext
 
 object Splash {
 
@@ -17,7 +17,7 @@ object Splash {
     }
 
     fun params(
-        context: AppComponentContext,
+        context: ComponentContext,
         onOnboarding: () -> Unit,
         onMain: () -> Unit,
     ): ParametersDefinition = {

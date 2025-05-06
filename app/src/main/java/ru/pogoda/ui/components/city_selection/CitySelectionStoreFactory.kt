@@ -13,6 +13,12 @@ class CitySelectionStoreFactory(
             name = "CitySelectionStore",
             initialState = CitySelection.State(),
             executorFactory = coroutineExecutorFactory {
+                onIntent<CitySelection.Intent.OnBackClick> {
+                    publish(CitySelection.Label.OnBackClick)
+                }
+                onIntent<CitySelection.Intent.OnCitySelected> {
+                    publish(CitySelection.Label.OnCitySelected(it.value))
+                }
                 onIntent<CitySelection.Intent.OnSearchChange> {
                     dispatch(CitySelection.Msg.OnSearchChange(it.text))
                 }

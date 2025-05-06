@@ -20,6 +20,7 @@ import ru.pogoda.ui.components.main.MainComponent
 import ru.pogoda.ui.components.main.MainStoreFactory
 import ru.pogoda.ui.components.onboarding.geo.DefaultGeoOnboardingComponent
 import ru.pogoda.ui.components.onboarding.geo.GeoOnboardingComponent
+import ru.pogoda.ui.components.onboarding.geo.GeoOnboardingStoreFactory
 import ru.pogoda.ui.components.onboarding.push.DefaultPushOnboardingComponent
 import ru.pogoda.ui.components.onboarding.push.PushOnboardingComponent
 import ru.pogoda.ui.components.root.DefaultRootComponent
@@ -38,6 +39,7 @@ private val storesModule = module {
     single<StoreFactory> { LoggingStoreFactory(DefaultStoreFactory()) }
 
     singleOf(::SplashStoreFactory)
+    singleOf(::GeoOnboardingStoreFactory)
     singleOf(::CitySelectionStoreFactory)
     singleOf(::MainStoreFactory)
     singleOf(::SettingsStoreFactory)

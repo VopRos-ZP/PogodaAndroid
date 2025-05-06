@@ -1,8 +1,16 @@
 package ru.pogoda.domain.repository
 
-import kotlinx.coroutines.flow.Flow
-import ru.pogoda.data.model.WeatherResponse
+import ru.pogoda.domain.model.Fact
 
 interface WeatherRepository {
-    val weather: Flow<WeatherResponse>
+
+    suspend fun fetchFact(
+        lat: Double,
+        lon: Double,
+        period: String,
+        type: String,
+        mode: String,
+        block: String,
+    ): Fact
+
 }

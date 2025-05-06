@@ -1,18 +1,20 @@
 package ru.pogoda.ui.components.splash
 
+import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import kotlinx.coroutines.launch
-import ru.pogoda.ui.decompose.context.AppComponentContext
+import ru.pogoda.ui.extensions.componentScope
 
 class DefaultSplashComponent(
-    componentContext: AppComponentContext,
+    context: ComponentContext,
     private val onOnboarding: () -> Unit,
     private val onMain: () -> Unit,
     private val storeFactory: SplashStoreFactory,
-) : SplashComponent, AppComponentContext by componentContext {
+) : SplashComponent, ComponentContext by context {
 
     private val store = instanceKeeper.getStore { storeFactory.create() }
+    private val scope = componentScope()
 
     init {
         scope.launch {

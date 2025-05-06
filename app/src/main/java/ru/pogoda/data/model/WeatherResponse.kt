@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class WeatherResponse(
+    @SerialName("info")
     val info: InfoBlock,
     val fact: FactBlock,
     @SerialName("forecast_24")

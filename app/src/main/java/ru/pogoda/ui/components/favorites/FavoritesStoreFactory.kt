@@ -18,7 +18,12 @@ class FavoritesStoreFactory(
             name = "FavoritesStore",
             initialState = State(),
             executorFactory = coroutineExecutorFactory {
-                onIntent<Intent.OnSearchChange> { dispatch(Msg.OnSearchChange(it.value)) }
+                onIntent<Intent.OnBackClick> {
+                    publish(Label.OnBackClick)
+                }
+                onIntent<Intent.OnSearchChange> {
+                    dispatch(Msg.OnSearchChange(it.value))
+                }
             },
             reducer = {
                 when (it) {
