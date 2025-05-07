@@ -1,11 +1,11 @@
 package ru.pogoda.ui.components.onboarding.push
 
-import ru.pogoda.ui.decompose.context.AppComponentContext
+import com.arkivanov.decompose.ComponentContext
 
 class DefaultPushOnboardingComponent(
-    context: AppComponentContext,
+    context: ComponentContext,
     private val onPermission: () -> Unit
-) : PushOnboardingComponent, AppComponentContext by context {
+) : PushOnboardingComponent, ComponentContext by context {
 
     override fun onPermissionClick() {
         onPermission()

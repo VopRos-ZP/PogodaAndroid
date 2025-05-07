@@ -22,8 +22,15 @@ class ThemeStoreFactory(
 
             },
             executorFactory = coroutineExecutorFactory {
-                onIntent<Intent.OnThemeChange> { dispatch(Msg.OnThemeChange(it.value)) }
-                onIntent<Intent.OnLogoChange> { dispatch(Msg.OnLogoChange(it.value)) }
+                onIntent<Intent.OnBackClick> {
+                    publish(Label.OnBackClick)
+                }
+                onIntent<Intent.OnThemeChange> {
+                    dispatch(Msg.OnThemeChange(it.value))
+                }
+                onIntent<Intent.OnLogoChange> {
+                    dispatch(Msg.OnLogoChange(it.value))
+                }
             },
             reducer = {
                 when (it) {

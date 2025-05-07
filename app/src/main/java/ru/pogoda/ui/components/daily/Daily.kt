@@ -1,9 +1,9 @@
 package ru.pogoda.ui.components.daily
 
+import com.arkivanov.decompose.ComponentContext
 import org.koin.core.parameter.ParametersDefinition
 import org.koin.core.parameter.parametersOf
 import ru.pogoda.data.model.WeatherResponse
-import ru.pogoda.ui.decompose.context.AppComponentContext
 
 object Daily {
 
@@ -11,20 +11,20 @@ object Daily {
         val weatherResponse: WeatherResponse? = null,
     )
 
-    sealed interface Intent
-
-    sealed interface Action {
-
+    sealed interface Intent {
+        data object OnBackClick : Intent
     }
 
-    sealed interface Label
-
-    sealed interface Msg {
-
+    sealed interface Label {
+        data object OnBackClick : Label
     }
+
+    sealed interface Action
+
+    sealed interface Msg
 
     fun params(
-        context: AppComponentContext,
+        context: ComponentContext,
         onBackClick: () -> Unit,
     ): ParametersDefinition = {
         parametersOf(

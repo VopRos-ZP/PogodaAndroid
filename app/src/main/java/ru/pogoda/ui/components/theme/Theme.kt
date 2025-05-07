@@ -1,8 +1,8 @@
 package ru.pogoda.ui.components.theme
 
+import com.arkivanov.decompose.ComponentContext
 import org.koin.core.parameter.ParametersDefinition
 import org.koin.core.parameter.parametersOf
-import ru.pogoda.ui.decompose.context.AppComponentContext
 
 object Theme {
 
@@ -19,11 +19,14 @@ object Theme {
     )
 
     sealed interface Intent {
+        data object OnBackClick : Intent
         data class OnThemeChange(val value: Int) : Intent
         data class OnLogoChange(val value: Int) : Intent
     }
 
-    sealed interface Label
+    sealed interface Label {
+        data object OnBackClick : Label
+    }
 
     sealed interface Action {
         data class OnThemeChange(val value: Int) : Action
@@ -35,7 +38,7 @@ object Theme {
     }
 
     fun params(
-        context: AppComponentContext,
+        context: ComponentContext,
         onBackClick: () -> Unit,
     ) : ParametersDefinition = {
         parametersOf(

@@ -1,9 +1,9 @@
 package ru.pogoda.ui.components.favorites
 
+import com.arkivanov.decompose.ComponentContext
 import org.koin.core.parameter.ParametersDefinition
 import org.koin.core.parameter.parametersOf
 import ru.pogoda.data.model.WeatherResponse
-import ru.pogoda.ui.decompose.context.AppComponentContext
 
 object Favorites {
 
@@ -13,24 +13,22 @@ object Favorites {
     )
 
     sealed interface Intent {
+        data object OnBackClick : Intent
         data class OnSearchChange(val value: String) : Intent
-
     }
 
     sealed interface Label {
-
+        data object OnBackClick : Label
     }
 
-    sealed interface Action {
-
-    }
+    sealed interface Action
 
     sealed interface Msg {
         data class OnSearchChange(val value: String) : Msg
     }
 
     fun params(
-        context: AppComponentContext,
+        context: ComponentContext,
         onBackClick: () -> Unit,
     ): ParametersDefinition = {
         parametersOf(

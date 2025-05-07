@@ -33,7 +33,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -60,10 +59,6 @@ fun MainScreen(component: MainComponent) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(topAppBarState)
 
     val weatherColor = PogodaTheme.colors.cloudyDay
-
-    LaunchedEffect(topAppBarState) {
-        Log.d("Main", "${topAppBarState.contentOffset}")
-    }
 
     Scaffold(
         modifier = Modifier
@@ -108,7 +103,7 @@ fun MainScreen(component: MainComponent) {
             )
         },
     ) { padding ->
-        if (state.weather == null) {
+        if (state.fact == null) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -118,7 +113,7 @@ fun MainScreen(component: MainComponent) {
                 CircularProgressIndicator()
             }
         } else {
-            val weather = state.weather!!
+            val fact = state.fact!!
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -128,8 +123,8 @@ fun MainScreen(component: MainComponent) {
                 verticalArrangement = Arrangement.spacedBy(30.dp)
             ) {
                 TempBlock(
-                    temp = weather.fact.temp,
-                    secondTemp = weather.fact.feelsLike,
+                    temp = fact.temp,
+                    secondTemp = fact.feelsLike,
                     onHeightChange = { topAppBarState.contentOffset = it },
                     color = weatherColor
                 )

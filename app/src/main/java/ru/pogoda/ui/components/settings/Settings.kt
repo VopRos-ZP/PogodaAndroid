@@ -1,8 +1,8 @@
 package ru.pogoda.ui.components.settings
 
+import com.arkivanov.decompose.ComponentContext
 import org.koin.core.parameter.ParametersDefinition
 import org.koin.core.parameter.parametersOf
-import ru.pogoda.ui.decompose.context.AppComponentContext
 
 object Settings {
 
@@ -27,10 +27,6 @@ object Settings {
     }
 
     sealed interface Action {
-        data class OnTempChange(val value: Int) : Action
-        data class OnWindChange(val value: Int) : Action
-        data class OnPressureChange(val value: Int) : Action
-        data class OnTimeChange(val value: Int) : Action
         data class OnVersionChange(val value: String) : Action
     }
 
@@ -43,7 +39,7 @@ object Settings {
     }
 
     fun params(
-        context: AppComponentContext,
+        context: ComponentContext,
         onBack: () -> Unit,
         onIcon: () -> Unit,
         onTheme: () -> Unit,

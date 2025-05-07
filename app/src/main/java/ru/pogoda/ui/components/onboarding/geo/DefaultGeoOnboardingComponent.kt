@@ -1,19 +1,38 @@
 package ru.pogoda.ui.components.onboarding.geo
 
-import ru.pogoda.ui.decompose.context.AppComponentContext
+import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.mvikotlin.core.instancekeeper.getStore
+import com.arkivanov.mvikotlin.extensions.coroutines.labels
+import kotlinx.coroutines.launch
+import ru.pogoda.ui.extensions.componentScope
 
 class DefaultGeoOnboardingComponent(
-    context: AppComponentContext,
+    private val storeFactory: GeoOnboardingStoreFactory,
     private val onPermission: () -> Unit,
     private val onCustomize: () -> Unit,
-) : GeoOnboardingComponent, AppComponentContext by context {
+    context: ComponentContext,
+) : GeoOnboardingComponent, ComponentContext by context {
+
+    private val store = instanceKeeper.getStore { storeFactory.create() }
+    private val scope = componentScope()
+
+    init {
+        scope.launch {
+            store.labels.collect {
+                when (it) {
+                    is GeoOnboarding.Label.OnPermissionClick -> onPermission()
+                    is GeoOnboarding.Label.OnCustomizeClick -> onCustomize()
+                }
+            }
+        }
+    }
 
     override fun onPermissionClick() {
-        onPermission()
+        store.accept(GeoOnboarding.Intent.OnPermissionClick)
     }
 
     override fun onCustomizeClick() {
-        onCustomize()
+        store.accept(GeoOnboarding.Intent.OnCustomizeClick)
     }
 
 }

@@ -1,13 +1,13 @@
 package ru.pogoda.ui.components.onboarding.push
 
+import com.arkivanov.decompose.ComponentContext
 import org.koin.core.parameter.ParametersDefinition
 import org.koin.core.parameter.parametersOf
-import ru.pogoda.ui.decompose.context.AppComponentContext
 
 object PushOnboarding {
 
     fun params(
-        context: AppComponentContext,
+        context: ComponentContext,
         onPermissionGrated: () -> Unit
     ): ParametersDefinition = {
         parametersOf(

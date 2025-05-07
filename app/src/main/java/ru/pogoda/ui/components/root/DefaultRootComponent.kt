@@ -1,5 +1,6 @@
 package ru.pogoda.ui.components.root
 
+import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.DelicateDecomposeApi
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -21,12 +22,11 @@ import ru.pogoda.ui.components.root.RootComponent.Child
 import ru.pogoda.ui.components.settings.Settings
 import ru.pogoda.ui.components.splash.Splash
 import ru.pogoda.ui.components.theme.Theme
-import ru.pogoda.ui.decompose.context.AppComponentContext
 
 @OptIn(DelicateDecomposeApi::class)
 class DefaultRootComponent(
-    componentContext: AppComponentContext,
-) : RootComponent, KoinComponent, AppComponentContext by componentContext {
+    componentContext: ComponentContext,
+) : RootComponent, KoinComponent, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<Config>()
 
@@ -39,7 +39,7 @@ class DefaultRootComponent(
             childFactory = ::child,
         )
 
-    private fun child(config: Config, context: AppComponentContext) =
+    private fun child(config: Config, context: ComponentContext) =
         when (config) {
             is Config.Splash -> Child.Splash(
                 get(

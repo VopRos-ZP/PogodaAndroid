@@ -1,9 +1,6 @@
 package ru.pogoda.ui.components.settings
 
 import android.content.Context
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
-import android.os.Build
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.coroutineBootstrapper
@@ -13,7 +10,6 @@ import ru.pogoda.ui.components.settings.Settings.Intent
 import ru.pogoda.ui.components.settings.Settings.Label
 import ru.pogoda.ui.components.settings.Settings.Msg
 import ru.pogoda.ui.components.settings.Settings.State
-
 
 class SettingsStoreFactory(
     private val storeFactory: StoreFactory,
@@ -29,14 +25,24 @@ class SettingsStoreFactory(
                 dispatch(Action.OnVersionChange(info.versionName ?: ""))
             },
             executorFactory = coroutineExecutorFactory {
-                onIntent<Intent.OnBackClick> { publish(Label.OnBackClick) }
-
-                onIntent<Intent.OnTempChange> { dispatch(Msg.OnTempChange(it.value)) }
-                onIntent<Intent.OnWindChange> { dispatch(Msg.OnWindChange(it.value)) }
-                onIntent<Intent.OnPressureChange> { dispatch(Msg.OnPressureChange(it.value)) }
-                onIntent<Intent.OnTimeChange> { dispatch(Msg.OnTimeChange(it.value)) }
-
-                onAction<Action.OnVersionChange> { dispatch(Msg.OnVersionChange(it.value)) }
+                onIntent<Intent.OnBackClick> {
+                    publish(Label.OnBackClick)
+                }
+                onIntent<Intent.OnTempChange> {
+                    dispatch(Msg.OnTempChange(it.value))
+                }
+                onIntent<Intent.OnWindChange> {
+                    dispatch(Msg.OnWindChange(it.value))
+                }
+                onIntent<Intent.OnPressureChange> {
+                    dispatch(Msg.OnPressureChange(it.value))
+                }
+                onIntent<Intent.OnTimeChange> {
+                    dispatch(Msg.OnTimeChange(it.value))
+                }
+                onAction<Action.OnVersionChange> {
+                    dispatch(Msg.OnVersionChange(it.value))
+                }
             },
             reducer = {
                 when (it) {

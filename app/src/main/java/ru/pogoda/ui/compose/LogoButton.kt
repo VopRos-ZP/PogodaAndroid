@@ -35,9 +35,7 @@ fun LogoButton(
             .background(MaterialTheme.colorScheme.onPrimary, shape)
             .border(borderStroke, shape)
             .clip(shape)
-            .clickable {
-                onCheckedChange()
-            },
+            .clickable { onCheckedChange() },
         contentAlignment = Alignment.Center
     ) {
         ImageVector.vectorResource(logo).let {
